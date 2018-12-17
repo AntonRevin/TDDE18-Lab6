@@ -8,62 +8,63 @@
 
 template <class T>
 class List {
-public:
-  List();
-  ~List() { delete first; }
+   public:
+    List();
+    ~List() { delete first; }
 
-  void insert(T const& d);
-  
-  List(List<T> const&);
-  List(List<T>&&);
-  List<T>& operator=(List<T> const&);
-  List<T>& operator=(List<T>&&);
-    
-private:
+    void insert(T const& d);
 
-  template <class L>
-  class Link {
-  public:
-    Link(L const& d, Link* n)
-      : data(d), next(n) {}
-    ~Link() { delete next; }
-    
-    friend class List;
+    List(List<T> const&);
+    List(List<T>&&);
+    List<T>& operator=(List<T> const&);
+    List<T>& operator=(List<T>&&);
 
-    static Link<L>* clone(Link<L> const*);
-    
-  private:
-    L data;
-    Link<L>* next;
-  };
-  
-  Link<T>* first;
-  
-public:
+   private:
+    template <class L>
+    class Link {
+       public:
+        Link(L const& d, Link* n)
+            : data(d), next(n) {}
+        ~Link() { delete next; }
 
-  template <class C>
-  class ListIterator {
-    friend List;
-    public:
-      explicit ListIterator(Link<C>* c) : current(c) { }
-      ListIterator& operator++();
+        friend class List;
 
-      bool operator==(ListIterator<C> const& other);
-      bool operator!=(ListIterator<C> const& other);
-      C& operator*();
-      C& operator->();
+        static Link<L>* clone(Link<L> const*);
 
-    private:
-      Link<C>* current;
-      void setCurrent(Link<C>* _value);
-  };
-  ListIterator<T> iterator_begin{first};
-  ListIterator<T> iterator_end{nullptr};
-  ListIterator<T>& begin();
-  ListIterator<T>& end();
+       private:
+        L data;
+        Link<L>* next;
+    };
 
-  typedef ListIterator<T> Iterator;
-  
+    Link<T>* first;
+
+   public:
+    template <class C>
+    class ListIterator {
+        friend List;
+
+       public:
+        explicit ListIterator(Link<C>* c) : current(c) {}
+        ListIterator& operator++();
+
+        bool operator==(ListIterator<C> const& other);
+        bool operator!=(ListIterator<C> const& other);
+        C& operator*();
+        C& operator->();
+
+       private:
+        Link<C>* current;
+        void setCurrent(Link<C>* _value);
+    };
+    ListIterator<T> iterator_begin{first};
+    ListIterator<T> iterator_end{nullptr};
+    ListIterator<T>& begin();
+    ListIterator<T>& end();
+
+    template <class T_ext>
+    friend std::ostream& operator<<(std::ostream&, List<T_ext> const&);
+    using value_type = T;
+    typedef ListIterator<T> Iterator;
 };
 
 #endif
