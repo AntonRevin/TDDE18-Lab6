@@ -67,4 +67,5 @@ class List {
     typedef ListIterator<T> Iterator;
 };
 
+#include "list.tcc"
 #endif

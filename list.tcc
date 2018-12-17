@@ -97,7 +97,7 @@ std::ostream& operator<<(std::ostream& os, typename List<T>::template Link<T> co
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, List<T>& list) {
-    typename List<T>::template InIterator<T> it{list.begin()};
+    typename List<T>::template ListIterator<T> it{list.begin()};
     for (; it != list.template end(); ++it)
         os << *it << " ";
     return os;
