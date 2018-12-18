@@ -52,7 +52,7 @@ int main() {
 
     // example of using the list with std::string
     // ( notice the overwhelming similarity to above code? )
-    /*{
+    {
         List<std::string> list;
         decltype(list)::value_type word;
 
@@ -73,7 +73,7 @@ int main() {
         cout << endl;
 
         cout << list << endl;
-    }*/
+    }
 #endif
 
     return 0;
