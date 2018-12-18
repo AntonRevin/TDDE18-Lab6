@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.script": "lua",
-        "*.gui_script": "lua",
-        "*.tcc": "cpp",
-        "iostream": "cpp"
-    }
-}
