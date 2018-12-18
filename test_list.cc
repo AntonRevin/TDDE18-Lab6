@@ -15,7 +15,7 @@ int main() {
     // and convert this code to instantiate it.
     // Move on to the iterator once it compiles.
 
-    List list;
+    List<int> list;
     decltype(list)::value_type number;
 
     cout << "Enter numbers, finish by Ctrl-D " << endl;
@@ -35,7 +35,7 @@ int main() {
         }
 
         for (decltype(list)::Iterator it{list.begin()};
-             it != list.end(); ++it) {
+            it != list.end(); ++it) {
             cout << *it << " ";
         }
         cout << endl;
@@ -52,7 +52,7 @@ int main() {
 
     // example of using the list with std::string
     // ( notice the overwhelming similarity to above code? )
-    {
+    /*{
         List<std::string> list;
         decltype(list)::value_type word;
 
@@ -73,7 +73,7 @@ int main() {
         cout << endl;
 
         cout << list << endl;
-    }
+    }*/
 #endif
 
     return 0;

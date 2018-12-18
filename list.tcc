@@ -61,20 +61,38 @@ List<T>& List<T>::operator=(List<T>&& rhs) {
 
 template <class T>
 template <class C>
-typename List<T>::template ListIterator<C>& List<T>::ListIterator<C>::operator++() {
+C& List<T>::ListIterator<C>::operator*() const{
+    return current->data;
+}
+
+template <class T>
+template <class C>
+C& List<T>::ListIterator<C>::operator->() const{
+    return current->data;
+}
+
+template <class T>
+template <class C>
+void List<T>::ListIterator<C>::setCurrent(Link<C>* _value){
+    current = _value;
+}
+
+template <class T>
+template <class C>
+List<T>::template ListIterator<C>& List<T>::ListIterator<C>::operator++() {
     current = current->next;
     return *this;
 }
 
 template <class T>
 template <class C>
-bool List<T>::ListIterator<C>::operator==(ListIterator<C> const& other) {
+bool List<T>::ListIterator<C>::operator==(ListIterator<C> const& other) const {
     return other.current = current;
 }
 
 template <class T>
 template <class C>
-bool List<T>::ListIterator<C>::operator!=(ListIterator<C> const& other) {
+bool List<T>::ListIterator<C>::operator!=(ListIterator<C> const& other) const {
     return other.current != current;
 }
 
