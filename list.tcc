@@ -79,7 +79,7 @@ void List<T>::ListIterator<C>::setCurrent(Link<C>* _value){
 
 template <class T>
 template <class C>
-List<T>::template ListIterator<C>& List<T>::ListIterator<C>::operator++() {
+typename List<T>::template ListIterator<C>& List<T>::ListIterator<C>::operator++() {
     current = current->next;
     return *this;
 }
