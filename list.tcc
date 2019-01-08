@@ -5,14 +5,13 @@
 
 template <class T>
 void List<T>::insert(T const& d) {
-    first = new Link<T>(d, first);
+    first = new Link(d, first);
 }
 
 //-----------------------------------------------------//
 // Important copy and assignment stuff
 template <class T>
-template <class L>
-typename List<T>::template Link<L>* List<T>::Link<L>::clone(Link<L> const* dolly) {
+typename List<T>::Link* List<T>::Link::clone(Link const* dolly) {
     if (dolly != nullptr) {
         return new Link(dolly->data, clone(dolly->next));
     } else {
@@ -28,7 +27,7 @@ List<T>::List() : first(nullptr) {
 template <class T>
 List<T>::List(List<T> const& l) {
     std::clog << "***Copy construction" << std::endl;
-    first = Link<T>::clone(l.first);
+    first = Link::clone(l.first);
 }
 
 template <class T>
@@ -60,62 +59,50 @@ List<T>& List<T>::operator=(List<T>&& rhs) {
 /* Iterator functions */
 
 template <class T>
-template <class C>
-C& List<T>::ListIterator<C>::operator*() const{
+T& List<T>::ListIterator::operator*() const{
     return current->data;
 }
 
 template <class T>
-template <class C>
-C& List<T>::ListIterator<C>::operator->() const{
+T& List<T>::ListIterator::operator->() const{
     return current->data;
 }
 
 template <class T>
-template <class C>
-void List<T>::ListIterator<C>::setCurrent(Link<C>* _value){
+void List<T>::ListIterator::setCurrent(Link* _value){
     current = _value;
 }
 
 template <class T>
-template <class C>
-typename List<T>::template ListIterator<C>& List<T>::ListIterator<C>::operator++() {
+typename List<T>::ListIterator& List<T>::ListIterator::operator++() {
     current = current->next;
     return *this;
 }
 
 template <class T>
-template <class C>
-bool List<T>::ListIterator<C>::operator==(ListIterator<C> const& other) const {
+bool List<T>::ListIterator::operator==(ListIterator const& other) const {
     return other.current = current;
 }
 
 template <class T>
-template <class C>
-bool List<T>::ListIterator<C>::operator!=(ListIterator<C> const& other) const {
+bool List<T>::ListIterator::operator!=(ListIterator const& other) const {
     return other.current != current;
 }
 
 template <class T>
-typename List<T>::template ListIterator<T>& List<T>::begin() {
+typename List<T>::ListIterator& List<T>::begin() {
     iterator_begin.setCurrent(first);  // reset the iterator
     return iterator_begin;
 }
 
 template <class T>
-typename List<T>::template ListIterator<T>& List<T>::end() {
+typename List<T>::ListIterator& List<T>::end() {
     return iterator_end;
 }
 
 template <class T>
-std::ostream& operator<<(std::ostream& os, typename List<T>::template Link<T> const& link) {
-    os << link.data;
-    return os;
-}
-
-template <class T>
 std::ostream& operator<<(std::ostream& os, List<T>& list) {
-    typename List<T>::template ListIterator<T> it{list.begin()};
+    typename List<T>::ListIterator it{list.begin()};
     for (; it != list.template end(); ++it)
         os << *it << " ";
     return os;

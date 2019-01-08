@@ -19,49 +19,45 @@ template <class T> class List {
     List<T>& operator=(List<T>&&);
 
    private:
-    template <class L> class Link {
+    class Link {
         public:
-            explicit Link(L const& d, Link* n)
+            explicit Link(T const& d, Link* n)
                 : data(d), next(n) {}
             ~Link() { delete next; }
 
             friend List;
 
-            static Link<L>* clone(Link<L> const*);
-
-            template<class U_EXT>
-            friend std::ostream& operator<<(std::ostream&, Link<U_EXT> const&);
+            static Link* clone(Link const*);
         private:
-            L data;
-            Link<L>* next;
+            T data;
+            Link* next;
     };
 
-    Link<T>* first;
+    Link* first;
 
    public:
-    template <class C> class ListIterator {
+    class ListIterator {
         friend List;
         public:
-            explicit ListIterator(Link<C>* c) : current(c) {}
             ListIterator& operator++();
-
-            bool operator==(ListIterator<C> const& other) const;
-            bool operator!=(ListIterator<C> const& other) const;
-            C& operator*() const;
-            C& operator->() const;
+            bool operator==(ListIterator const& other) const;
+            bool operator!=(ListIterator const& other) const;
+            T& operator*() const;
+            T& operator->() const;
         private:
-            Link<C>* current;
-            void setCurrent(Link<C>* _value);
+            explicit ListIterator(Link* c) : current(c) {}
+            Link* current;
+            void setCurrent(Link* _value);
     };
-    ListIterator<T> iterator_begin{first};
-    ListIterator<T> iterator_end{nullptr};
-    ListIterator<T>& begin();
-    ListIterator<T>& end();
+    ListIterator iterator_begin{first};
+    ListIterator iterator_end{nullptr};
+    ListIterator& begin();
+    ListIterator& end();
 
     template <class T_ext>
     friend std::ostream& operator<<(std::ostream&, List<T_ext> const&);
     using value_type = T;
-    typedef ListIterator<T> Iterator;
+    typedef ListIterator Iterator;
 };
 
 #include "list.tcc"
