@@ -59,17 +59,17 @@ List<T>& List<T>::operator=(List<T>&& rhs) {
 /* Iterator functions */
 
 template <class T>
-T& List<T>::ListIterator::operator*() const{
+T& List<T>::ListIterator::operator*() const {
     return current->data;
 }
 
 template <class T>
-T& List<T>::ListIterator::operator->() const{
+T& List<T>::ListIterator::operator->() const {
     return current->data;
 }
 
 template <class T>
-void List<T>::ListIterator::setCurrent(Link* _value){
+void List<T>::ListIterator::setCurrent(Link* _value) {
     current = _value;
 }
 
@@ -90,20 +90,19 @@ bool List<T>::ListIterator::operator!=(ListIterator const& other) const {
 }
 
 template <class T>
-typename List<T>::ListIterator& List<T>::begin() {
-    iterator_begin.setCurrent(first);  // reset the iterator
-    return iterator_begin;
+typename List<T>::ListIterator List<T>::begin() const {
+    return ListIterator(first);
 }
 
 template <class T>
-typename List<T>::ListIterator& List<T>::end() {
-    return iterator_end;
+typename List<T>::ListIterator List<T>::end() const {
+    return ListIterator(nullptr);
 }
 
 template <class T>
-std::ostream& operator<<(std::ostream& os, List<T>& list) {
-    typename List<T>::ListIterator it{list.begin()};
-    for (; it != list.template end(); ++it)
-        os << *it << " ";
+std::ostream& operator<<(std::ostream& os, const List<T>& list) {
+    for (auto i : list) {
+        os << i << " ";
+    }
     return os;
 }
